@@ -23,6 +23,7 @@ class App extends React.Component {
   componentDidMount() {
     const { setCurrentUser } = this.props;
 
+    // Firebase returns a function to Unsubscribe from the subscription to the Observable
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
@@ -38,7 +39,7 @@ class App extends React.Component {
       } else {
         setCurrentUser(userAuth);
       }
-    });
+    }, error => console.log(error));
     
   }
 
