@@ -11,7 +11,9 @@ import CheckoutPage from './pages/checkout/checkout.page';
 
 import Header from './components/header/header.component';
 // import { auth, createUserProfileDocument } from './firebase/firebase.utils';
-import { setCurrentUser } from './redux/user/user.actions';
+// import { setCurrentUser } from './redux/user/user.actions';
+
+import { checkUserSession } from './redux/user/user.actions';
 
 import { selectCurrentUser } from './redux/user/user.selectors';
 
@@ -21,6 +23,10 @@ class App extends React.Component {
   unsubscribeFromAuth = null
 
   componentDidMount() {
+
+    const { checkUserSession } = this.props;
+    checkUserSession();
+
     // const { setCurrentUser } = this.props;
 
     // This was migrated to sagas: see user.sagas.js file
@@ -44,9 +50,9 @@ class App extends React.Component {
     
   }
 
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
-  }
+  // componentWillUnmount() {
+  //   this.unsubscribeFromAuth();
+  // }
 
   render() {
     return( 
@@ -75,7 +81,8 @@ class App extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
+  checkUserSession: () => dispatch(checkUserSession())
+  //setCurrentUser: user => dispatch(setCurrentUser(user))
 });
 
 const mapStateToProps = createStructuredSelector({
